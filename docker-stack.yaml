@@ -1,0 +1,44 @@
+#!/usr/bin/env -S docker stack deploy --with-registry-auth rslsync -c
+
+version: "3.9"
+
+# NOTE deploy
+# docker stack deploy --with-registry-auth -c docker-stack.yaml rslsync
+
+services:
+  rslsync:
+    image: zerocluster/rslsync
+    init: true
+    stop_grace_period: 5m
+
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+
+    # networks: [private]
+    networks: [host]
+
+    ports:
+      - { published: 8888, target: 8888 }
+      - { published: 55555, target: 55555 }
+      - { published: 55555, target: 55555, protocol: udp }
+
+    volumes:
+      - { type: tmpfs, target: /dev/shm, tmpfs: { size: 1073741824 } }
+      - { type: volume, source: rslsync, target: /var/local/rslsync/.sync }
+      - { type: bind, source: $PWD, target: /var/local/rslsync/data }
+
+    build:
+      context: .
+
+networks:
+  # private: { external: true }
+  host: { name: host, external: true }
+
+volumes:
+  rslsync: { name: rslsync }
+
+x-build:
+  default_tag: latest
+  auto_tags: [main, latest, next]

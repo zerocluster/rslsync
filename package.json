@@ -1,0 +1,22 @@
+{
+    "name": "@zerocluster/rslsync",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Resilio sync",
+    "keywords": [
+        "resilio",
+        "sync"
+    ],
+    "homepage": "https://github.com/zerocluster/rslsync",
+    "bugs": {
+        "url": "https://github.com/zerocluster/rslsync/issues",
+        "email": "zdm@softvisio.net"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zerocluster/rslsync.git"
+    },
+    "license": "ISC",
+    "author": "zdm <zdm@softvisio.net>",
+    "type": "module"
+}
